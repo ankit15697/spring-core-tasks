@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>employeeProperties.properties</value>
+        </property>
+    </bean>
+        <bean id="department" class="com.java.employeeInfo.Department" scope = "prototype">
+            <constructor-arg value="${departmentName}"></constructor-arg>
+            <constructor-arg >
+                <bean class="com.java.employeeInfo.StringToDate" factory-method="parse">
+                    <constructor-arg value="${dateFormat}"/>
+                    <constructor-arg value="${date}" />
+                 </bean>
+              </constructor-arg>
+        </bean>
+        <bean id="employee" class="com.java.employeeInfo.Employee" scope = "prototype" autowire="constructor">
+            <constructor-arg value="${name}"></constructor-arg>
+            <constructor-arg value="${age}" type="Integer"></constructor-arg>
+            <constructor-arg value="${salary}" type="Double"></constructor-arg>
+            <constructor-arg>
+                <list>
+                    <value> "${list1}" </value>
+                    <value> "${list2}" </value>
+                    <value> "${list3}" </value>
+                </list>
+            </constructor-arg>
+        </bean>
+</beans>
